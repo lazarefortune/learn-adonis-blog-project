@@ -1,30 +1,15 @@
 // import type { HttpContext } from '@adonisjs/core/http'
 
 import { HttpContext } from '@adonisjs/core/http'
+import Post from '#models/post'
 
 export default class PostsController {
   async index() {
-    return [
-      {
-        id: 1,
-        title: 'Mon premier article',
-        content: 'Bienvenue dans AdonisJS 6',
-      },
-      {
-        id: 2,
-        title: 'Encore un article',
-        content: 'On avance doucement !',
-      },
-    ]
+    return await Post.all()
   }
 
   async show({ params }: HttpContext) {
-    const posts = [
-      { id: 1, title: 'Mon premier article', content: 'Bienvenue dans AdonisJS 6' },
-      { id: 2, title: 'Encore un article', content: 'On avance doucement !' },
-    ]
-
-    const post = posts.find((p) => p.id === Number(params.id))
+    const post = Post.find(params.id)
 
     if (!post) {
       return { message: 'Aucun article' }
