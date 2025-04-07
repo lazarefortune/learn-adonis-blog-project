@@ -30,27 +30,27 @@ L'objectif est de **découvrir AdonisJS en profondeur** tout en créant un proje
 ---
 
 ### 🗃️ 4. Base de données et ORM
-- [ ] Choix et configuration du moteur de base de données (SQLite, PostgreSQL, etc.)
-- [ ] Création de la migration `posts`
-- [ ] Création du model `Post`
-- [ ] Utiliser Lucid ORM pour faire des requêtes simples
-- [ ] Seed de données pour tester
+- [x] Choix et configuration du moteur de base de données (SQLite, PostgreSQL, etc.)
+- [x] Création de la migration `posts`
+- [x] Création du model `Post`
+- [x] Utiliser Lucid ORM pour faire des requêtes simples
+- [x] Seed de données pour tester
 
 ---
 
 ### ✍️ 5. CRUD complet pour les articles
-- [ ] Afficher tous les articles (`index`)
-- [ ] Voir un article (`show`)
-- [ ] Créer un article (`create` & `store`)
-- [ ] Modifier un article (`edit` & `update`)
-- [ ] Supprimer un article (`destroy`)
+- [x] Afficher tous les articles (`index`)
+- [x] Voir un article (`show`)
+- [x] Créer un article (`create` & `store`)
+- [x] Modifier un article (`edit` & `update`)
+- [x] Supprimer un article (`destroy`)
 
 ---
 
 ### 🎨 6. Vues et Frontend
-- [ ] Utiliser Edge.js pour créer des templates
-- [ ] Lier les données du backend aux vues
-- [ ] Ajouter une base HTML/CSS simple
+- [x] Utiliser Edge.js pour créer des templates
+- [x] Lier les données du backend aux vues
+- [x] Ajouter une base HTML/CSS simple
 
 ---
 

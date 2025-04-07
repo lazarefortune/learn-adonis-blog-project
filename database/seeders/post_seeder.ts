@@ -1,5 +1,5 @@
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
-import Post from "#models/post";
+import Post from '#models/post'
 
 export default class extends BaseSeeder {
   async run() {

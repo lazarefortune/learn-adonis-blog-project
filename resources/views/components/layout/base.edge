@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ title || "Your default title" }}</title>
+    @if ($slots.meta)
+      {{{ await $slots.meta() }}}
+    @endif
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+  </head>
+  <body class="flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="bg-gray-800 text-white">
+      <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <div class="text-xl font-bold">
+          <a href="/" class="hover:text-gray-300">My Blog</a>
+        </div>
+        <nav>
+          <!-- Menu Desktop -->
+          <ul class="hidden md:flex space-x-6">
+            <li><a href="/" class="hover:text-gray-300">Accueil</a></li>
+            <li><a href="/about" class="hover:text-gray-300">A propos</a></li>
+          </ul>
+          <!-- Bouton pour mobile -->
+          <div class="md:hidden">
+            <button id="mobile-menu-button" class="focus:outline-none">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"></path>
+              </svg>
+            </button>
+          </div>
+        </nav>
+      </div>
+      <!-- Menu Mobile -->
+      <div id="mobile-menu" class="hidden md:hidden">
+        <ul class="px-4 pt-2 pb-4 space-y-1">
+          <li>
+            <a href="/" class="block text-white hover:bg-gray-700 rounded px-2 py-1">Home</a>
+          </li>
+          <li>
+            <a href="/about" class="block text-white hover:bg-gray-700 rounded px-2 py-1">About</a>
+          </li>
+        </ul>
+      </div>
+    </header>
+
+
+
+    <!-- Contenu Principal -->
+    <main class="container py-8">
+      @!component('components/notification')
+      {{{ await $slots.body() }}}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50 text-slate-400">
+      <div class="container min-h-32 flex justify-center items-center">
+        &copy; {{ new Date().getFullYear() }} My Blog. All rights reserved.
+      </div>
+    </footer>
+
+    <!-- Script pour toggle du menu mobile -->
+    <script>
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    </script>
+  </body>
+</html>

@@ -1,46 +1,45 @@
-<!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>
-      AdonisJS - Tuto
-    </title>
+@layout.base({})
 
-    <link rel="preconnect" href="https://fonts.bunny.net" />
-    <link
-      href="https://fonts.bunny.net/css?family=instrument-sans:400,400i,500,500i,600,600i,700,700i"
-      rel="stylesheet"
-    />
-
-    <script src="https://cdn.tailwindcss.com">
-
-    </script>
-
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: [ "Bricolage Grotesque", "sans-serif" ]
-            },
-            colors: {
-              primary: {
-                DEFAULT: "#5A45FF",
-                lighter: "#a599ff"
-              },
-            }
-          }
-        }
-      };
-    </script>
-
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @stack('dumper')
-  </head>
-  <body class="min-h-screen w-screen font-sans">
-    <div class="pt-4 h-full flex flex-col">
-        <h2 class="text-4xl font-medium">Salut les amis/gens !</h2>
+@slot('body')
+  <!-- HERO SECTION -->
+  <section class="relative bg-slate-50 py-16 px-4 sm:px-6 lg:px-8 text-center">
+    <div class="max-w-3xl mx-auto">
+      <h1 class="text-5xl font-extrabold text-slate-900 sm:text-6xl tracking-tight">Bienvenue sur le blog</h1>
+      <p class="mt-4 text-lg text-slate-600">Découvre des articles faits avec passion et une touche de code ✨</p>
+      <a href="{{ route('posts.create') }}"
+         class="mt-8 button">
+        + Ajouter un article
+      </a>
     </div>
-  </body>
-</html>
+  </section>
+
+  <!-- ARTICLES GRID -->
+  <section class="py-16 bg-white px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6">Derniers articles</h2>
+
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        @each(post in posts)
+          <article class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between h-full">
+            <div>
+              <h3 class="text-xl font-semibold text-slate-800 mb-2">{{ post.title }}</h3>
+              <p class="text-slate-600 text-sm mb-4 leading-relaxed">
+                {{ post.content.length > 150 ? post.content.slice(0, 150) + '...' : post.content }}
+              </p>
+            </div>
+            <div class="flex justify-between items-center mt-4 text-sm">
+              <a href="{{ route('posts.edit', { id: post.id }) }}" class="text-blue-600 hover:underline">Modifier</a>
+              <form action="{{ route('posts.destroy', { id: post.id }) }}" method="POST" class="inline">
+                <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+                <button type="submit" class="text-red-600 hover:underline">Supprimer</button>
+              </form>
+            </div>
+          </article>
+        @else
+          <p class="col-span-full text-center text-slate-400 mt-10">Aucun article pour le moment 💤</p>
+        @end
+      </div>
+    </div>
+  </section>
+@endslot
+@end

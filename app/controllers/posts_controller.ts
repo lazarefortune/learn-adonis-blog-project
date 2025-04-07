@@ -1,20 +1,46 @@
-// import type { HttpContext } from '@adonisjs/core/http'
-
-import { HttpContext } from '@adonisjs/core/http'
+import type { HttpContext } from '@adonisjs/core/http'
 import Post from '#models/post'
+import BaseController from '#controllers/base_controller'
 
-export default class PostsController {
-  async index() {
-    return await Post.all()
+export default class PostsController extends BaseController {
+  public async index({ view }: HttpContext) {
+    const posts = await Post.all()
+    return view.render('pages/home', { posts })
   }
 
-  async show({ params }: HttpContext) {
-    const post = Post.find(params.id)
+  public async create({ view }: HttpContext) {
+    return view.render('posts/edit')
+  }
 
-    if (!post) {
-      return { message: 'Aucun article' }
-    }
+  public async edit({ params, view }: HttpContext) {
+    const post = await Post.findOrFail(params.id)
+    return view.render('posts/edit', { post })
+  }
 
-    return post
+  public async store({ request, response, session }: HttpContext) {
+    const { title, content } = request.only(['title', 'content'])
+
+    await Post.create({ title, content })
+    this.notify(session, 'Article créé avec succès ✅')
+    return response.redirect().toRoute('home')
+  }
+
+  public async update({ params, request, response, session }: HttpContext) {
+    const post = await Post.findOrFail(params.id)
+    const { title, content } = request.only(['title', 'content'])
+
+    post.merge({ title, content })
+    await post.save()
+
+    this.notify(session, 'Article mis à jour avec succès ✅')
+    return response.redirect().toRoute('home')
+  }
+
+  public async destroy({ params, response, session }: HttpContext) {
+    const post = await Post.findOrFail(params.id)
+    await post.delete()
+
+    this.notify(session, 'Article supprimé avec succès ❌', 'info')
+    return response.redirect().toRoute('home')
   }
 }
